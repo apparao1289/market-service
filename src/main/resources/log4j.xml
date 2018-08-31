@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE log4j:configuration PUBLIC "-//APACHE//DTD LOG4J 1.2//EN" "log4j.dtd">
+<log4j:configuration xmlns:log4j="http://jakarta.apache.org/log4j/">
+	<appender name="ASYNC" class="org.apache.log4j.AsyncAppender">
+		<param name="BufferSize" value="500" />
+		<param name="LocationInfo" value="true" />
+		<appender-ref ref="stdoutAppender" />
+	</appender>
+	<appender name="fileAppender" class="org.apache.log4j.RollingFileAppender">
+		<param name="Threshold" value="ALL" />
+		<param name="MaxFileSize" value="100MB" />
+		<param name="MaxBackupIndex" value="20" />
+		<param name="File"
+			value="${catalina.base}/logs/marketservice.log" />
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="ConversionPattern" value="%d %t %-5p %c{1}:%L %m %n" />
+		</layout>
+	</appender>
+	
+	<appender name="stdoutAppender" class="org.apache.log4j.ConsoleAppender">
+		<param name="Target" value="System.out" />
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="ConversionPattern" value="%d %t %-5p %c{1}:%L %m %n" />
+		</layout>
+	</appender>
+
+	<!--sets the priority log level for org.springframework -->
+	<logger name="org.springframework">
+		<level value="info" />
+	</logger>
+
+	<logger name="com.test">
+		<level value="debug" />
+	</logger>
+
+	<logger name="org.hibernate.SQL">
+		<level value="debug" />
+	</logger>
+
+	<!--sets the default priority log level -->
+	<root>
+		<priority value="info"></priority>
+		<appender-ref ref="ASYNC" />
+	</root>
+</log4j:configuration>
+
